@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Request Menu</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+</head>
+
+<body class="bg-gray-100 font-sans">
+
+<div class="flex h-screen">
+
+<!-- SIDEBAR -->
+
+<div id="sidebar" class="sidebar">
+
+<h1 class="logo">SPPG Gunungpring 001</h1>
+
+<ul>
+
+<li onclick="showCategory('protein')" class="menu">🥩 Protein</li>
+<li onclick="showCategory('karbo')" class="menu">🍚 Karbohidrat</li>
+<li onclick="showCategory('buah')" class="menu">🍎 Buah</li>
+<li onclick="showCategory('sayur')" class="menu">🥬 Sayur</li>
+
+</ul>
+
+</div>
+
+<!-- CONTENT -->
+
+<div class="content flex-1 p-6 overflow-auto">
+
+<!-- HEADER -->
+
+<div class="flex justify-between items-center mb-6">
+
+<div class="flex items-center gap-3">
+
+<button onclick="toggleSidebar()" class="text-2xl font-bold">
+☰
+</button>
+
+<h2 id="categoryTitle" class="text-2xl font-bold">
+Protein
+</h2>
+
+</div>
+
+<input id="search"
+placeholder="Cari bahan..."
+onkeyup="searchItem()"
+class="border px-4 py-2 rounded shadow-sm">
+
+</div>
+
+<!-- STAT CARDS -->
+
+<div class="grid grid-cols-3 gap-6 mb-6">
+
+<div class="bg-white p-4 rounded-xl shadow hover:shadow-lg transition">
+<h4 class="text-gray-500">Total Bahan</h4>
+<p id="totalItems" class="text-2xl font-bold">0</p>
+</div>
+
+<div class="bg-white p-4 rounded-xl shadow hover:shadow-lg transition">
+<h4 class="text-gray-500">Bahan Dipilih</h4>
+<p id="totalCart" class="text-2xl font-bold">0</p>
+</div>
+
+<div class="bg-white p-4 rounded-xl shadow hover:shadow-lg transition">
+<h4 class="text-gray-500">Estimasi Biaya</h4>
+<p class="text-2xl font-bold">Rp <span id="total">0</span></p>
+</div>
+
+</div>
+
+<!-- ITEMS -->
+
+<div id="items" class="grid grid-cols-3 gap-6"></div>
+
+<button onclick="addItem()" class="btn-add mt-4">
++ Tambah Bahan
+</button>
+
+<hr class="my-8">
+
+<h3 class="text-xl font-bold mb-4">
+Bahan Dipilih
+</h3>
+
+<div id="cart"></div>
+
+<!-- FORM -->
+
+<div class="form mt-6">
+
+<input id="email" placeholder="Email">
+
+<textarea id="remarks" placeholder="Remarks"></textarea>
+
+<div class="flex gap-3">
+
+<button onclick="submitForm()" class="btn-submit">
+Submit
+</button>
+
+<button onclick="exportExcel()" class="btn-export">
+Export Excel
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script src="script.js"></script>
+
+<script>
+
+function toggleSidebar(){
+document.getElementById("sidebar").classList.toggle("hide")
+}
+
+</script>
+
+</body>
+</html>
