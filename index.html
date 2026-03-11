@@ -19,17 +19,16 @@ href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/
 
 <body class="bg-gray-100 font-sans">
 
-<div class="flex h-screen">
+<div class="flex h-screen overflow-hidden">
 
 <!-- SIDEBAR -->
-
 <div id="sidebar" class="sidebar">
 
-<h1 class="logo">SPPG Gunungpring 001</h1>
+<h1 class="logo">MBG System</h1>
 
 <ul>
 
-<li onclick="showCategory('protein')" class="menu">🥩 Protein</li>
+<li onclick="showCategory('protein')" class="menu active">🥩 Protein</li>
 <li onclick="showCategory('karbo')" class="menu">🍚 Karbohidrat</li>
 <li onclick="showCategory('buah')" class="menu">🍎 Buah</li>
 <li onclick="showCategory('sayur')" class="menu">🥬 Sayur</li>
@@ -39,8 +38,11 @@ href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/
 </div>
 
 <!-- CONTENT -->
+<div class="content flex-1 overflow-y-auto">
 
-<div class="content flex-1 p-6 overflow-auto">
+<button onclick="toggleSidebar()" class="menuBtn">
+☰
+</button>
 
 <!-- HEADER -->
 
@@ -61,7 +63,7 @@ Protein
 <input id="search"
 placeholder="Cari bahan..."
 onkeyup="searchItem()"
-class="border px-4 py-2 rounded shadow-sm">
+class="border p-2 rounded w-full sm:w-64">
 
 </div>
 
@@ -88,7 +90,9 @@ class="border px-4 py-2 rounded shadow-sm">
 
 <!-- ITEMS -->
 
-<div id="items" class="grid grid-cols-3 gap-6"></div>
+<div id="items"
+class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+</div>
 
 <button onclick="addItem()" class="btn-add mt-4">
 + Tambah Bahan

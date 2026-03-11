@@ -70,24 +70,30 @@ data[current].forEach((item,i)=>{
 
 html+=`
 
-<div class="card animate__animated animate__fadeInUp">
+<div class="card flex flex-col sm:flex-row sm:justify-between gap-2">
 
-<h4 class="font-bold">${item.name}</h4>
+<div>
+
+<b>${item.name}</b>
+<br>
+Rp ${item.price}
+
+</div>
+
+<div class="flex items-center gap-2">
 
 <input type="number"
-value="${item.price}"
-onchange="updatePrice(${i},this.value)"
-class="border p-1 w-full my-2">
+value="${item.qty}"
+min="1"
+onchange="changeQty(${i},this.value)"
+class="border w-16">
 
-<button onclick="selectItem(${i})"
-class="bg-blue-500 text-white px-3 py-1 rounded">
-Pilih
+<button onclick="removeCart(${i})"
+class="text-red-500">
+hapus
 </button>
 
-<button onclick="deleteItem(${i})"
-class="bg-red-500 text-white px-3 py-1 rounded">
-Hapus
-</button>
+</div>
 
 </div>
 
