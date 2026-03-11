@@ -1,4 +1,9 @@
-let data = {
+// LOAD DATA DARI LOCAL STORAGE
+
+let savedData = localStorage.getItem("mbg_data")
+let savedCart = localStorage.getItem("mbg_cart")
+
+let data = savedData ? JSON.parse(savedData) : {
 
 protein:[
 {name:"Telur",price:2000},
@@ -23,9 +28,19 @@ sayur:[
 }
 
 let current="protein"
-let cart=[]
+let cart = savedCart ? JSON.parse(savedCart) : []
 
 
+// SIMPAN DATA
+function saveData(){
+
+localStorage.setItem("mbg_data",JSON.stringify(data))
+localStorage.setItem("mbg_cart",JSON.stringify(cart))
+
+}
+
+
+// GANTI KATEGORI
 function showCategory(cat){
 
 current=cat
@@ -41,10 +56,12 @@ setTimeout(()=>{
 container.classList.remove("animate__animated","animate__fadeIn")
 },500)
 
+updateTotalItems()
+
 }
 
 
-
+// RENDER ITEM
 function renderItems(){
 
 let html=""
@@ -80,16 +97,22 @@ Hapus
 
 document.getElementById("items").innerHTML=html
 
+updateTotalItems()
+
 }
 
 
-
+// UPDATE HARGA
 function updatePrice(i,val){
+
 data[current][i].price=parseInt(val)
+
+saveData()
+
 }
 
 
-
+// HAPUS ITEM
 function deleteItem(i){
 
 let cards=document.querySelectorAll("#items .card")
@@ -100,6 +123,9 @@ card.classList.add("animate__animated","animate__fadeOut")
 setTimeout(()=>{
 
 data[current].splice(i,1)
+
+saveData()
+
 renderItems()
 
 },300)
@@ -107,16 +133,20 @@ renderItems()
 }
 
 
-
+// TAMBAH ITEM
 function addItem(){
 
 let name=prompt("Nama bahan")
 let price=prompt("Harga")
 
+if(!name || !price) return
+
 data[current].push({
 name,
 price:parseInt(price)
 })
+
+saveData()
 
 renderItems()
 
@@ -131,7 +161,7 @@ container.classList.remove("animate__animated","animate__bounceIn")
 }
 
 
-
+// PILIH ITEM
 function selectItem(i){
 
 let item=data[current][i]
@@ -141,6 +171,8 @@ name:item.name,
 price:item.price,
 qty:1
 })
+
+saveData()
 
 renderCart()
 
@@ -152,12 +184,12 @@ setTimeout(()=>{
 cartBox.classList.remove("animate__animated","animate__pulse")
 },500)
 
-document.getElementById("totalCart").innerText=cart.length
+updateCartCount()
 
 }
 
 
-
+// RENDER CART
 function renderCart(){
 
 let html=""
@@ -205,17 +237,24 @@ hapus
 document.getElementById("cart").innerHTML=html
 document.getElementById("total").innerText=total
 
+updateCartCount()
+
 }
 
 
-
+// UBAH QTY
 function changeQty(i,val){
+
 cart[i].qty=parseInt(val)
+
+saveData()
+
 renderCart()
+
 }
 
 
-
+// HAPUS CART
 function removeCart(i){
 
 let cards=document.querySelectorAll("#cart .card")
@@ -226,6 +265,9 @@ card.classList.add("animate__animated","animate__fadeOut")
 setTimeout(()=>{
 
 cart.splice(i,1)
+
+saveData()
+
 renderCart()
 
 },300)
@@ -233,7 +275,7 @@ renderCart()
 }
 
 
-
+// SEARCH ITEM
 function searchItem(){
 
 let keyword=document.getElementById("search").value.toLowerCase()
@@ -273,15 +315,17 @@ document.getElementById("items").innerHTML=html
 }
 
 
-
+// SUBMIT FORM KE SERVER
 function submitForm(){
 
 let email=document.getElementById("email").value
 let remarks=document.getElementById("remarks").value
 
 if(!email){
+
 alert("Email wajib diisi")
 return
+
 }
 
 fetch("http://localhost:3000/submit",{
@@ -311,6 +355,7 @@ console.log(data)
 }
 
 
+// EXPORT CSV
 function exportExcel(){
 
 let csv="Nama,Qty,Harga\n"
@@ -332,15 +377,40 @@ a.click()
 }
 
 
-
-renderItems()
-
+// TOGGLE SIDEBAR
 function toggleSidebar(){
 
 let sidebar=document.getElementById("sidebar")
 
 sidebar.classList.toggle("hide")
 
-document.getElementById("totalItems").innerText=data[current].length
+}
+
+
+// UPDATE TOTAL ITEM
+function updateTotalItems(){
+
+let totalItems = data[current].length
+
+let el=document.getElementById("totalItems")
+
+if(el) el.innerText=totalItems
 
 }
+
+
+// UPDATE CART COUNT
+function updateCartCount(){
+
+let el=document.getElementById("totalCart")
+
+if(el) el.innerText=cart.length
+
+}
+
+
+// LOAD PERTAMA
+renderItems()
+renderCart()
+updateCartCount()
+updateTotalItems()

@@ -19,7 +19,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/
 
 <body class="bg-gray-100 font-sans">
 
-<div class="flex min-h-screen">
+<div class="flex h-screen overflow-hidden">
 
 <!-- SIDEBAR -->
 <div id="sidebar" class="sidebar">
@@ -28,7 +28,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/
 
 <ul>
 
-<li onclick="showCategory('protein')" class="menu">🥩 Protein</li>
+<li onclick="showCategory('protein')" class="menu active">🥩 Protein</li>
 <li onclick="showCategory('karbo')" class="menu">🍚 Karbohidrat</li>
 <li onclick="showCategory('buah')" class="menu">🍎 Buah</li>
 <li onclick="showCategory('sayur')" class="menu">🥬 Sayur</li>
@@ -38,19 +38,23 @@ href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/
 </div>
 
 <!-- CONTENT -->
-<div class="flex-1 p-4 md:p-8">
+<div class="content flex-1 overflow-y-auto">
 
-<!-- HEADER -->
-
-<div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-
-<div class="flex items-center gap-3">
-
-<button onclick="toggleSidebar()" class="text-2xl font-bold md:hidden">
+<button onclick="toggleSidebar()" class="menuBtn">
 ☰
 </button>
 
-<h2 id="categoryTitle" class="text-xl md:text-2xl font-bold">
+<!-- HEADER -->
+
+<div class="flex justify-between items-center mb-6">
+
+<div class="flex items-center gap-3">
+
+<button onclick="toggleSidebar()" class="text-2xl font-bold">
+☰
+</button>
+
+<h2 id="categoryTitle" class="text-2xl font-bold">
 Protein
 </h2>
 
@@ -59,25 +63,25 @@ Protein
 <input id="search"
 placeholder="Cari bahan..."
 onkeyup="searchItem()"
-class="border p-2 rounded w-full md:w-64">
+class="border p-2 rounded w-full sm:w-64">
 
 </div>
 
 <!-- STAT CARDS -->
 
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+<div class="grid grid-cols-3 gap-6 mb-6">
 
-<div class="bg-white p-4 rounded-xl shadow">
+<div class="bg-white p-4 rounded-xl shadow hover:shadow-lg transition">
 <h4 class="text-gray-500">Total Bahan</h4>
 <p id="totalItems" class="text-2xl font-bold">0</p>
 </div>
 
-<div class="bg-white p-4 rounded-xl shadow">
+<div class="bg-white p-4 rounded-xl shadow hover:shadow-lg transition">
 <h4 class="text-gray-500">Bahan Dipilih</h4>
 <p id="totalCart" class="text-2xl font-bold">0</p>
 </div>
 
-<div class="bg-white p-4 rounded-xl shadow">
+<div class="bg-white p-4 rounded-xl shadow hover:shadow-lg transition">
 <h4 class="text-gray-500">Estimasi Biaya</h4>
 <p class="text-2xl font-bold">Rp <span id="total">0</span></p>
 </div>
@@ -87,7 +91,7 @@ class="border p-2 rounded w-full md:w-64">
 <!-- ITEMS -->
 
 <div id="items"
-class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 </div>
 
 <button onclick="addItem()" class="btn-add mt-4">
@@ -100,28 +104,23 @@ class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 Bahan Dipilih
 </h3>
 
-<div id="cart" class="space-y-3"></div>
+<div id="cart"></div>
 
 <!-- FORM -->
 
-<div class="mt-6 space-y-3">
+<div class="form mt-6">
 
-<input id="email"
-placeholder="Email"
-class="border p-2 rounded w-full">
+<input id="email" placeholder="Email">
 
-<textarea id="remarks"
-placeholder="Remarks"
-class="border p-2 rounded w-full">
-</textarea>
+<textarea id="remarks" placeholder="Remarks"></textarea>
 
-<div class="flex flex-col sm:flex-row gap-3">
+<div class="flex gap-3">
 
-<button onclick="submitForm()" class="btn-submit w-full">
+<button onclick="submitForm()" class="btn-submit">
 Submit
 </button>
 
-<button onclick="exportExcel()" class="btn-export w-full">
+<button onclick="exportExcel()" class="btn-export">
 Export Excel
 </button>
 
@@ -138,11 +137,7 @@ Export Excel
 <script>
 
 function toggleSidebar(){
-
-let sidebar=document.getElementById("sidebar")
-
-sidebar.classList.toggle("show")
-
+document.getElementById("sidebar").classList.toggle("hide")
 }
 
 </script>
